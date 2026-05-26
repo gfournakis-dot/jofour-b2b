@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORDER JO. FOUR GREECE</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        :root {
+            --primary-bg: #f9f9f9;      
+            --header-bg: #ffffff;       
+            --accent: #a6192e; /* Το αυθεντικό μπορντό της Jo. Four */         
+            --gold: #bda061;   /* Το χρυσό της Jo. Four */
+            --text-main: #333333;
+            --btn-main: #1a1a1a;        
+            --btn-tester: #bda061;      
+        }
+
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: var(--primary-bg); margin: 0; padding: 0; color: var(--text-main); }
+        
+        header { background-color: var(--header-bg); padding: 15px 20px; text-align: center; border-bottom: 5px solid var(--gold); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .main-logo-container { display: flex; justify-content: center; margin-bottom: 5px; }
+        .main-logo-container img { max-width: 200px; height: auto; }
+        header h1 { margin: 5px 0 0 0; font-weight: 600; letter-spacing: 1.5px; font-size: 14px; text-transform: uppercase; color: var(--accent); }
+
+        .container { display: flex; flex-wrap: wrap; padding: 20px; max-width: 1200px; margin: 0 auto; gap: 25px; }
+        .products-section { flex: 2; min-width: 300px; }
+        .cart-section { flex: 1; min-width: 320px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.08); align-self: flex-start; position: sticky; top: 10px; border: 1px solid #eaeaea; }
+        
+        .category-title { border-bottom: 3px solid var(--gold); padding-bottom: 5px; margin-top: 25px; font-weight: bold; text-transform: uppercase; font-size: 15px; letter-spacing: 1px; color: var(--accent); }
+        
+        .product-card { background: white; padding: 12px; margin-bottom: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border: 1px solid #f0f0f0; position: relative; }
+        .product-card:hover { border-color: var(--accent); }
+
+        .image-container { position: relative; width: 75px; height: 75px; z-index: 10; }
+        .product-image { 
+            width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 1px solid #eaeaea; 
+            background-color: #ffffff; transition: transform 0.3s ease; cursor: zoom-in; display: block;
+        }
+        .image-container:hover .product-image { 
+            transform: scale(3.5); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            z-index: 9999;
+            position: relative;
+        }
+        
+        .product-info { flex: 1; min-width: 180px; }
+        .product-info h4 { margin: 0 0 5px 0; font-size: 14px; color: #2c302e; }
+        .price-badge { background: #fafafa; padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 13px; border: 1px solid #e0e0e0; color: var(--accent); }
+        
+        .actions { display: flex; gap: 8px; align-items: center; }
+        .qty-input { width: 45px; padding: 6px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-weight: bold; font-size: 14px;}
+        
+        .tester-btn { background-color: var(--btn-tester); color: white; border: none; padding: 8px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease; }
+        .add-btn { background-color: var(--btn-main); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        
+        .totals { margin-top: 15px; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px solid #eaeaea; }
+        .grand-total { font-size: 17px; font-weight: bold; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 10px; color: var(--accent); }
+        
+        .shipping-notice { font-size: 11px; font-style: italic; color: #666; margin-top: 8px; text-align: center; border-bottom: 1px solid #eaeaea; padding-bottom: 8px; }
+        .thank-you-text { font-size: 11.5px; color: #444; margin-top: 8px; text-align: center; line-height: 1.6; border-bottom: 1px solid #eaeaea; padding-bottom: 8px; }
+        .thank-you-text strong { color: var(--accent); }
+
+        /* Στυλ για το πλαίσιο των IBAN */
+        .bank-details { font-size: 11px; color: #333; margin-top: 8px; text-align: center; line-height: 1.5; font-family: monospace; }
+        .bank-details strong { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #555; }
+
+        .checkout-btn { width: 100%; background-color: var(--accent); color: white; padding: 16px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .checkout-btn:disabled { background-color: #cccccc; cursor: not-allowed; }
+
+        .form-input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 13px; }
+        .form-input:focus { border-color: var(--accent); outline: none; }
+
+        .payment-section { margin-bottom: 15px; }
+        .payment-label { font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #444; display: block; }
+        .payment-buttons { display: flex; gap: 10px; }
+        .payment-btn { flex: 1; background-color: #7f8c8d; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease; text-align: center; }
+        .payment-btn.active { background-color: #27ae60 !important; }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .image-container:hover .product-image { transform: scale(2.2); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="main-logo-container">
+        <img src="https://jofourgreece.gr/cdn/shop/files/Copy_of_Jo.Four_Logo_Logo_1.png" alt="Jo. Four Greece">
+    </div>
+    <h1>ORDER JO. FOUR GREECE</h1>
+</header>
+
+<div class="container">
+    <div class="products-section" id="products-container"></div>
+    <div class="cart-section">
+        <h3>🛒 Το Καλάθι μου</h3>
+        <div id="cart-items"><p style="color: #aaa; font-style: italic;">Το καλάθι είναι άδειο.</p></div>
+        
+        <div style="margin-top:20px; border-top: 1px solid #f0f0f0; padding-top: 15px;">
+            <input type="text" id="customer-company" placeholder="Επωνυμία *" class="form-input">
+            <input type="text" id="customer-afm" placeholder="ΑΦΜ *" class="form-input">
+            <input type="email" id="customer-email" placeholder="Το Email σας *" class="form-input">
+            <textarea id="order-notes" rows="3" placeholder="Παρατηρήσεις..." class="form-input" style="font-family: sans-serif; resize: none; margin-bottom:12px;"></textarea>
+            
+            <div class="payment-section">
+                <span class="payment-label">Τρόπος Πληρωμής *</span>
+                <div class="payment-buttons">
+                    <button type="button" id="pay-bank" class="payment-btn" onclick="selectPayment('bank')">🏛️ Κατάθεση σε Τράπεζα</button>
+                    <button type="button" id="pay-cash" class="payment-btn" onclick="selectPayment('cash')">💵 Μετρητά</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="totals">
+            <div style="display:flex; justify-content:space-between;"><span>Καθαρή Αξία:</span> <span id="net-total">0.00 €</span></div>
+            <div style="display:flex; justify-content:space-between;"><span>ΦΠΑ (24%):</span> <span id="vat-total">0.00 €</span></div>
+            <div class="grand-total" style="display:flex; justify-content:space-between;"><span>Τελικό Σύνολο:</span> <span id="grand-total">0.00 €</span></div>
+            
+            <div class="shipping-notice">Τυχόν έξοδα αποστολής επιβαρύνουν τον πελάτη</div>
+            
+            <div class="thank-you-text">
+                Ευχαριστούμε πολύ για την εμπιστοσύνη σας!<br>
+                📱 Κινητά: <strong>6933292978</strong> / <strong>6942072370</strong><br>
+                📞 Σταθερό: <strong>2121212560</strong>
+            </div>
+
+            <div class="bank-details">
+                <strong>ΕΘΝΙΚΗ:</strong> GR32011018300000018301061513<br>
+                <strong>EUROBANK:</strong> GR63026029400000890201642853
+            </div>
+        </div>
+        <button id="submit-order-btn" class="checkout-btn" onclick="sendOrder()">Αποστολη Παραγγελιας</button>
+    </div>
+</div>
+
+<script>
+    // --- ΣΥΝΔΕΣΗ EMAILJS ---
+    (function(){
+        emailjs.init("ANPdfKjEtWBL6kCRY");
+    })();
+
+    const EMAILJS_CONFIG = {
+        serviceID: "service_2l181os",
+        templateID: "template_3w98tzm"
+    };
+
+    const inventory = [
+        /* ΑΡΩΜΑΤΑ 50ml (ANGEL) - 6.88€ */
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a1", name: "Angel No 000", price: 6.88, img: "images/angel000.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a2", name: "Angel No 222", price: 6.88, img: "images/angel222.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a3", name: "Angel No 333", price: 6.88, img: "images/angel333.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a4", name: "Angel No 555", price: 6.88, img: "images/angel555.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a5", name: "Angel No 777", price: 6.88, img: "images/angel777.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a6", name: "Angel No 888", price: 6.88, img: "images/angel888.jpg" },
+
+        /* ΑΡΩΜΑΤΑ 50ml (ESSENTIAL) - 4.95€ */
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e1", name: "Sweet Diva", price: 4.95, img: "images/diva.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e2", name: "White Luxe", price: 4.95, img: "images/white_luxe.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e3", name: "Golden Aura", price: 4.95, img: "images/golden_aura.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e4", name: "Gelato Dream", price: 4.95, img: "images/gelato.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e5", name: "Crystal Breeze", price: 4.95, img: "images/crystal.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e6", name: "Brazilian Sol", price: 4.95, img: "images/brazilian.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e7", name: "Velvet Cream", price: 4.95, img: "images/velvet.jpg" },
+
+        /* ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ - 4.95€ */
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m1", name: "Ocean Force", price: 4.95, img: "images/ocean_force.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m2", name: "Dark Horizon", price: 4.95, img: "images/dark_horizon.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m3", name: "Amber Royal", price: 4.95, img: "images/amber_royal.jpg" },
+
+        /* BODY LOTIONS (250ml) - 4.50€ & 4.84€ */
+        { cat: "BODY LOTIONS (250ml)", id: "l1", name: "Caramel Pop Lotion", price: 4.50, img: "images/CARAMEL_POP.jpg" },
+        { cat: "BODY LOTIONS (250ml)", id: "l2", name: "Juicy Nectar Lotion", price: 4.50, img: "images/JUICY_NECTAR.jpg" },
+        { cat: "BODY LOTIONS (250ml)", id: "l3", name: "Rose Delight Lotion", price: 4.50, img: "images/ROSE_DELIGHT.jpg" },
+        { cat: "BODY LOTIONS (250ml)", id: "l4", name: "Sweet Jasmine Lotion", price: 4.50, img: "images/SWEET_JASMINE.jpg" },
+        { cat: "BODY LOTIONS (250ml)", id: "l5", name: "Velvet Cream Lotion", price: 4.50, img: "images/VELVET_CREAM.jpg" },
+        { cat: "BODY LOTIONS (250ml)", id: "l6", name: "White Cashmere Lotion", price: 4.50, img: "images/WHITE_CASHMERE.jpg" },
+        { cat: "BODY LOTIONS (250ml)", id: "l7", name: "Angel No 000 Lotion", price: 4.84, img: "images/lotion000.jpg" },
+        { cat: "BODY LOTIONS (250ml)", id: "l8", name: "Angel No 333 Lotion", price: 4.84, img: "images/lotion333.jpg" },
+
+        /* HAIR & BODY MISTS (200ml) - 5.40€ */
+        /* ΕΔΩ ΔΙΟΡΘΩΘΗΚΕ ΣΕ .png ΓΙΑ ΝΑ ΤΑΙΡΙΑΖΕΙ ΑΠΟΛΥΤΑ ΜΕ ΤΟ ΑΡΧΕΙΟ ΣΟΥ */
+        { cat: "HAIR & BODY MISTS", id: "mist1", name: "Brazilian Sol Mist", price: 5.40, img: "images/mist_brazilian.png" },
+        { cat: "HAIR & BODY MISTS", id: "mist2", name: "Crystal Breeze Mist", price: 5.90, img: "images/mist_crystal.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist3", name: "Gelato Dream Mist", price: 5.40, img: "images/mist_gelato.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist4", name: "Golden Aura Mist", price: 5.90, img: "images/mist_golden.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist5", name: "Ocean Force Mist", price: 5.90, img: "images/mist_ocean.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist6", name: "Sweet Diva Mist", price: 5.90, img: "images/mist_diva.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist7", name: "Vanilla 222 Mist", price: 5.40, img: "images/mist_vanilla.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist8", name: "Velvet Cream Mist", price: 5.40, img: "images/mist_velvet.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist9", name: "White Luxe Mist", price: 5.40, img: "images/mist_white.jpg" },
+
+        /* GIFT SETS - 9.00€ & 9.90€ */
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs1", name: "Set - Ocean Force", price: 9.00, img: "images/set_ocean.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs2", name: "Set - Sweet Diva", price: 9.90, img: "images/set_diva.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs3", name: "Set - Crystal Breeze", price: 9.90, img: "images/set_crystal.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs4", name: "Set - Gelato Dream", price: 9.00, img: "images/set_gelato.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs5", name: "Set - Golden Aura", price: 9.90, img: "images/set_golden.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs6", name: "Set - Vanilla 222", price: 9.90, img: "images/set_vanilla.jpg" }
+    ];
+
+    let cart = [];
+    let selectedPaymentMethod = "";
+
+    function renderProducts() {
+        const container = document.getElementById("products-container");
+        container.innerHTML = "";
+        const grouped = inventory.reduce((acc, curr) => {
+            if (!acc[curr.cat]) acc[curr.cat] = [];
+            acc[curr.cat].push(curr);
+            return acc;
+        }, {});
+
+        for (const [category, items] of Object.entries(grouped)) {
+            container.innerHTML += `<h2 class="category-title">${category}</h2>`;
+            items.forEach((item) => {
+                container.innerHTML += `
+                    <div class="product-card">
+                        <div class="image-container">
+                            <img src="${item.img}" alt="${item.name}" class="product-image" onerror="this.src='https://placehold.co/75?text=Jo.Four'">
+                        </div>
+                        <div class="product-info">
+                            <h4>${item.name}</h4>
+                            <span class="price-badge">${item.price.toFixed(2)} €</span>
+                        </div>
+                        <div class="actions">
+                            <button id="btn-tester-${item.id}" class="tester-btn" onclick="addTester('${item.name}', '${item.id}')">🎁 Tester</button>
+                            <input type="number" id="qty-${item.id}" class="qty-input" value="0" min="0">
+                            <button class="add-btn" onclick="addToCart('${item.name}', ${item.price}, '${item.id}')">Προσθήκη</button>
+                        </div>
+                    </div>`;
+            });
+        }
+    }
+
+    function addToCart(name, price, id, isTester = false) {
+        let qtyToAdd = 1;
+        if (!isTester && id) {
+            qtyToAdd = parseInt(document.getElementById(`qty-${id}`).value) || 0;
+            if (qtyToAdd <= 0) { alert("Επιλέξτε ποσότητα!"); return; }
+        }
+        const itemName = isTester ? `[TESTER] ${name}` : name;
+        const existing = cart.find(item => item.name === itemName);
+        if (existing) { Triangle: existing.qty += qtyToAdd; } else { cart.push({ name: itemName, price, qty: qtyToAdd, isTester }); }
+        updateCart();
+    }
+
+    function addTester(name, id) { addToCart(name, 0, id, true); }
+    function removeFromCart(name) { cart = cart.filter(i => i.name !== name); updateCart(); }
+
+    function selectPayment(method) {
+        selectedPaymentMethod = method;
+        const bankBtn = document.getElementById("pay-bank");
+        const cashBtn = document.getElementById("pay-cash");
+
+        if (method === 'bank') {
+            bankBtn.classList.add("active");
+            bankBtn.innerHTML = "✅ Κατάθεση σε Τράπεζα";
+            cashBtn.classList.remove("active");
+            cashBtn.innerHTML = "💵 Μετρητά";
+        } else if (method === 'cash') {
+            cashBtn.classList.add("active");
+            cashBtn.innerHTML = "✅ Μετρητά";
+            bankBtn.classList.remove("active");
+            bankBtn.innerHTML = "🏛️ Κατάθεση σε Τράπεζα";
+        }
+    }
+
+    function updateCart() {
+        const cartContainer = document.getElementById("cart-items");
+        cartContainer.innerHTML = "";
+        let netTotal = 0;
+        if (cart.length === 0) { cartContainer.innerHTML = '<p style="color:#aaa; font-style:italic;">Το καλάθι είναι άδειο.</p>'; }
+        else {
+            cart.forEach(item => {
+                netTotal += item.price * item.qty;
+                cartContainer.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-bottom:8px; border-bottom:1px solid #f0f0f0; padding-bottom:5px;">
+                        <div style="flex:2;"><b>${item.qty}x</b> ${item.name}</div>
+                        <div style="flex:1; text-align:right;">${(item.price * item.qty).toFixed(2)}€</div>
+                        <button onclick="removeFromCart('${item.name}')" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold; margin-left:10px;">✕</button>
+                    </div>`;
+            });
+        }
+        const vat = netTotal * 0.24;
+        document.getElementById("net-total").innerText = netTotal.toFixed(2) + " €";
+        document.getElementById("vat-total").innerText = vat.toFixed(2) + " €";
+        document.getElementById("grand-total").innerText = (netTotal + vat).toFixed(2) + " €";
+
+        inventory.forEach(item => {
+            const btn = document.getElementById(`btn-tester-${item.id}`);
+            if (btn) {
+                const hasT = cart.some(c => c.name === `[TESTER] ${item.name}`);
+                btn.innerHTML = hasT ? "✅ Tester" : "🎁 Tester";
+                btn.style.backgroundColor = hasT ? "#27ae60" : "var(--btn-tester)";
+            }
+        });
+    }
+
+    function sendOrder() {
+        if (cart.length === 0) { alert("Το καλάθι είναι άδειο!"); return; }
+        
+        const company = document.getElementById("customer-company").value.trim();
+        const afm = document.getElementById("customer-afm").value.trim();
+        const email = document.getElementById("customer-email").value.trim();
+        
+        if (!company) { alert("Παρακαλώ συμπληρώστε την Επωνυμία!"); return; }
+        if (!afm) { alert("Παρακαλώ συμπληρώστε το ΑΦΜ!"); return; }
+        if (!email) { alert("Παρακαλώ συμπληρώστε το Email σας!"); return; }
+        if (!selectedPaymentMethod) { alert("Παρακαλώ επιλέξτε Τρόπο Πληρωμής!"); return; }
+        
+        const orderBtn = document.getElementById("submit-order-btn");
+        orderBtn.disabled = true;
+        orderBtn.innerText = "ΑΠΟΣΤΟΛΗ...";
+
+        let cleanCartItems = "";
+        cart.forEach(item => {
+            cleanCartItems += `${item.qty}x ${item.name} ---- ${(item.price * item.qty).toFixed(2)}€\n`;
+        });
+
+        const paymentText = selectedPaymentMethod === "bank" ? "Κατάθεση σε Τράπεζα" : "Μετρητά";
+        const inputNotes = document.getElementById("order-notes").value.trim() || "Δεν υπάρχουν σημειώσεις.";
+        const combinedNotes = `ΕΠΩΝΥΜΙΑ: ${company}\nΑΦΜ: ${afm}\nΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ: ${paymentText}\n\nΠΑΡΑΤΗΡΗΣΕΙΣ:\n${inputNotes}`;
+
+        const templateParams = {
+            customer_email: email, 
+            order_notes: combinedNotes, 
+            html_cart_items: cleanCartItems, 
+            net_total: document.getElementById("net-total").innerText,
+            vat_total: document.getElementById("vat-total").innerText,
+            "grand-total": document.getElementById("grand-total").innerText
+        };
+
+        emailjs.send(EMAILJS_CONFIG.serviceID, EMAILJS_CONFIG.templateID, templateParams)
+            .then(function(response) {
+                alert("Η παραγγελία σας στάλθηκε με επιτυχία!");
+                cart = [];
+                selectedPaymentMethod = "";
+                document.getElementById("customer-company").value = "";
+                document.getElementById("customer-afm").value = "";
+                document.getElementById("customer-email").value = "";
+                document.getElementById("order-notes").value = "";
+                
+                const bankBtn = document.getElementById("pay-bank");
+                const cashBtn = document.getElementById("pay-cash");
+                bankBtn.classList.remove("active");
+                bankBtn.innerHTML = "🏛️ Κατάθεση σε Τράπεζα";
+                cashBtn.classList.remove("active");
+                cashBtn.innerHTML = "💵 Μετρητά";
+
+                updateCart();
+                orderBtn.disabled = false;
+                orderBtn.innerText = "Αποστολη Παραγγελιας";
+            }, function(error) {
+                alert("Αποτυχία αποστολής: " + JSON.stringify(error));
+                orderBtn.disabled = false;
+                orderBtn.innerText = "Αποστολη Παραγγελιας";
+            });
+    }
+
+    renderProducts();
+</script>
+</body>
+</html>
