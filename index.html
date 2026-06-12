@@ -116,7 +116,7 @@
             <div class="shipping-section">
                 <span class="shipping-label">Έξοδα Αποστολής *</span>
                 <div class="shipping-buttons">
-                    <button type="button" id="ship-free" class="shipping-btn" onclick="selectShipping('free')">🆓 Χωρίς Έξοδα</button>
+                    <button type="button" id="ship-free" class="shipping-btn" onclick="selectShipping('free')"> Free Χωρίς Έξοδα</button>
                     <button type="button" id="ship-custom" class="shipping-btn" onclick="selectShipping('custom')">🚚 Επιλογή Ποσού</button>
                 </div>
                 
@@ -164,6 +164,15 @@
 </div>
 
 <script>
+    (function(){
+        emailjs.init("ANPdfKjEtWBL6kCRY");
+    })();
+
+    const EMAILJS_CONFIG = {
+        serviceID: "service_2l181os",
+        templateID: "template_3w98tzm"
+    };
+
     const inventory = [
         /* ΑΡΩΜΑΤΑ 50ml (ANGEL) - 6.88€ */
         { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a1", name: "Angel No 000", price: 6.88, img: "images/angel000.jpg" },
@@ -392,8 +401,10 @@
         const inputNotes = document.getElementById("order-notes").value.trim() || "Δεν υπάρχουν σημειώσεις.";
         const combinedNotes = `ΕΠΩΝΥΜΙΑ: ${company}\nΑΦΜ: ${afm}\nΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ: ${paymentText}\nΜΕΤΑΦΟΡΙΚΑ: ${shippingText}\n\nΠΑΡΑΤΗΡΗΣΕΙΣ:\n${inputNotes}`;
 
+        const multipleRecipients = `${email}, cosmeticskaterina@gmail.com, info@jofourgreece.gr`;
+
         const templateParams = {
-            customer_email: email, 
+            customer_email: multipleRecipients, 
             order_notes: combinedNotes, 
             html_cart_items: cleanCartItems, 
             products_subtotal: document.getElementById("products-subtotal").innerText,
