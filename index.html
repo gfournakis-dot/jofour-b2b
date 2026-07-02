@@ -87,6 +87,16 @@
         .payment-btn { flex: 1; background-color: #7f8c8d; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease; text-align: center; }
         .payment-btn.active { background-color: #27ae60 !important; }
 
+        /* Υπο-ενότητα για επιλογή τράπεζας */
+        .bank-selection-container { display: none; margin-top: 12px; background: #fdfdfd; padding: 12px; border: 1px solid #eaeaea; border-radius: 6px; }
+        .bank-selection-label { font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #555; display: block; text-align: center; text-transform: uppercase; }
+        .bank-logos-wrapper { display: flex; gap: 15px; justify-content: center; }
+        .bank-logo-card { flex: 1; max-width: 130px; background: white; border: 2px solid #ddd; border-radius: 6px; padding: 6px; cursor: pointer; text-align: center; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .bank-logo-card img { width: 100%; height: 50px; object-fit: contain; border-radius: 4px; }
+        .bank-logo-card span { font-size: 11px; font-weight: bold; color: #555; }
+        .bank-logo-card.active { border-color: #27ae60; box-shadow: 0 0 8px rgba(39,174,96,0.2); }
+        .bank-logo-card.active span { color: #27ae60; }
+
         @media (max-width: 768px) {
             .container { flex-direction: column; }
             .image-container:hover .product-image { transform: scale(2.2); }
@@ -116,7 +126,7 @@
             <div class="shipping-section">
                 <span class="shipping-label">Έξοδα Αποστολής *</span>
                 <div class="shipping-buttons">
-                    <button type="button" id="ship-free" class="shipping-btn" onclick="selectShipping('free')"> Free Χωρίς Έξοδα</button>
+                    <button type="button" id="ship-free" class="shipping-btn" onclick="selectShipping('free')">🆓 Χωρίς Έξοδα</button>
                     <button type="button" id="ship-custom" class="shipping-btn" onclick="selectShipping('custom')">🚚 Επιλογή Ποσού</button>
                 </div>
                 
@@ -135,6 +145,21 @@
                 <div class="payment-buttons">
                     <button type="button" id="pay-bank" class="payment-btn" onclick="selectPayment('bank')">🏛️ Κατάθεση σε Τράπεζα</button>
                     <button type="button" id="pay-cash" class="payment-btn" onclick="selectPayment('cash')">💵 Μετρητά</button>
+                </div>
+                
+                <!-- Υπο-ενότητα Επιλογής Συγκεκριμένης Τράπεζας -->
+                <div id="bank-selection-box" class="bank-selection-container">
+                    <span class="bank-selection-label">Επιλέξτε Τράπεζα *</span>
+                    <div class="bank-logos-wrapper">
+                        <div id="bank-card-nbg" class="bank-logo-card" onclick="chooseSpecificBank('nbg')">
+                            <img src="images/nbg.jpg" alt="Εθνική Τράπεζα" onerror="this.src='https://placehold.co/120x50?text=ΕΘΝΙΚΗ'">
+                            <span id="bank-text-nbg">🏛️ Εθνική</span>
+                        </div>
+                        <div id="bank-card-eurobank" class="bank-logo-card" onclick="chooseSpecificBank('eurobank')">
+                            <img src="images/eurobank.jpg" alt="Eurobank" onerror="this.src='https://placehold.co/120x50?text=EUROBANK'">
+                            <span id="bank-text-eurobank">💳 Eurobank</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,26 +200,26 @@
 
     const inventory = [
         /* ΑΡΩΜΑΤΑ 50ml (ANGEL) - 6.88€ */
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a1", name: "Angel No 000", price: 6.88, img: "images/angel000.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a2", name: "Angel No 222", price: 6.88, img: "images/angel222.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a3", name: "Angel No 333", price: 6.88, img: "images/angel333.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a4", name: "Angel No 555", price: 6.88, img: "images/angel555.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a5", name: "Angel No 777", price: 6.88, img: "images/angel777.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a6", name: "Angel No 888", price: 6.88, img: "images/angel888.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a1", name: "Angel No 000 Perfume", price: 6.88, img: "images/angel000.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a2", name: "Angel No 222 Perfume", price: 6.88, img: "images/angel222.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a3", name: "Angel No 333 Perfume", price: 6.88, img: "images/angel333.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a4", name: "Angel No 555 Perfume", price: 6.88, img: "images/angel555.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a5", name: "Angel No 777 Perfume", price: 6.88, img: "images/angel777.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a6", name: "Angel No 888 Perfume", price: 6.88, img: "images/angel888.jpg" },
 
         /* ΑΡΩΜΑΤΑ 50ml (ESSENTIAL) - 4.95€ */
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e1", name: "Sweet Diva", price: 4.95, img: "images/diva.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e2", name: "White Luxe", price: 4.95, img: "images/white_luxe.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e3", name: "Golden Aura", price: 4.95, img: "images/golden_aura.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e4", name: "Gelato Dream", price: 4.95, img: "images/gelato.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e5", name: "Crystal Breeze", price: 4.95, img: "images/crystal.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e6", name: "Brazilian Sol", price: 4.95, img: "images/brazilian.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e7", name: "Velvet Cream", price: 4.95, img: "images/velvet.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e1", name: "Sweet Diva Perfume", price: 4.95, img: "images/diva.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e2", name: "White Luxe Perfume", price: 4.95, img: "images/white_luxe.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e3", name: "Golden Aura Perfume", price: 4.95, img: "images/golden_aura.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e4", name: "Gelato Dream Perfume", price: 4.95, img: "images/gelato.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e5", name: "Crystal Breeze Perfume", price: 4.95, img: "images/crystal.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e6", name: "Brazilian Sol Perfume", price: 4.95, img: "images/brazilian.jpg" },
+        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e7", name: "Velvet Cream Perfume", price: 4.95, img: "images/velvet.jpg" },
 
         /* ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ - 4.95€ */
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m1", name: "Ocean Force", price: 4.95, img: "images/ocean_force.jpg" },
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m2", name: "Dark Horizon", price: 4.95, img: "images/dark_horizon.jpg" },
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m3", name: "Amber Royal", price: 4.95, img: "images/amber_royal.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m1", name: "Ocean Force Perfume", price: 4.95, img: "images/ocean_force.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m2", name: "Dark Horizon Perfume", price: 4.95, img: "images/dark_horizon.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m3", name: "Amber Royal Perfume", price: 4.95, img: "images/amber_royal.jpg" },
 
         /* BODY LOTIONS (250ml) */
         { cat: "BODY LOTIONS (250ml)", id: "l1", name: "Caramel Pop Lotion", price: 4.50, img: "images/CARAMEL_POP.jpg" },
@@ -230,6 +255,7 @@
     let cart = [];
     let selectedPaymentMethod = "";
     let selectedShippingMethod = ""; 
+    let selectedBank = ""; // Κρατάει την επιλεγμένη τράπεζα ("nbg" ή "eurobank")
 
     function renderProducts() {
         const container = document.getElementById("products-container");
@@ -301,18 +327,50 @@
         selectedPaymentMethod = method;
         const bankBtn = document.getElementById("pay-bank");
         const cashBtn = document.getElementById("pay-cash");
+        const bankBox = document.getElementById("bank-selection-box");
 
         if (method === 'bank') {
             bankBtn.classList.add("active");
             bankBtn.innerHTML = "✅ Κατάθεση σε Τράπεζα";
             cashBtn.classList.remove("active");
             cashBtn.innerHTML = "💵 Μετρητά";
+            bankBox.style.display = "block"; // Εμφάνιση των λογοτύπων
         } else if (method === 'cash') {
             cashBtn.classList.add("active");
             cashBtn.innerHTML = "✅ Μετρητά";
             bankBtn.classList.remove("active");
             bankBtn.innerHTML = "🏛️ Κατάθεση σε Τράπεζα";
+            bankBox.style.display = "none";  // Απόκρυψη των λογοτύπων
+            resetBankSelection();            // Μηδενισμός τράπεζας
         }
+    }
+
+    function chooseSpecificBank(bank) {
+        selectedBank = bank;
+        const nbgCard = document.getElementById("bank-card-nbg");
+        const eurobankCard = document.getElementById("bank-card-eurobank");
+        const nbgText = document.getElementById("bank-text-nbg");
+        const eurobankText = document.getElementById("bank-text-eurobank");
+
+        if (bank === 'nbg') {
+            nbgCard.classList.add("active");
+            eurobankCard.classList.remove("active");
+            nbgText.innerHTML = "✅ ΕΘΝΙΚΗ";
+            eurobankText.innerHTML = "💳 Eurobank";
+        } else if (bank === 'eurobank') {
+            eurobankCard.classList.add("active");
+            nbgCard.classList.remove("active");
+            eurobankText.innerHTML = "✅ EUROBANK";
+            nbgText.innerHTML = "🏛️ Εθνική";
+        }
+    }
+
+    function resetBankSelection() {
+        selectedBank = "";
+        document.getElementById("bank-card-nbg").classList.remove("active");
+        document.getElementById("bank-card-eurobank").classList.remove("active");
+        document.getElementById("bank-text-nbg").innerHTML = "🏛️ Εθνική";
+        document.getElementById("bank-text-eurobank").innerHTML = "💳 Eurobank";
     }
 
     function updateCart() {
@@ -382,6 +440,12 @@
         if (selectedShippingMethod === "custom" && shippingInput === "") { alert("Παρακαλώ συμπληρώστε το ποσό των εξόδων αποστολής!"); return; }
         if (!selectedPaymentMethod) { alert("Παρακαλώ επιλέξτε Τρόπο Πληρωμής!"); return; }
         
+        // Έλεγχος αν επιλέχθηκε συγκεκριμένη τράπεζα στην κατάθεση
+        if (selectedPaymentMethod === "bank" && !selectedBank) {
+            alert("Παρακαλώ επιλέξτε μια από τις δύο τράπεζες (Εθνική ή Eurobank)!");
+            return;
+        }
+        
         const orderBtn = document.getElementById("submit-order-btn");
         orderBtn.disabled = true;
         orderBtn.innerText = "ΑΠΟΣΤΟΛΗ...";
@@ -396,11 +460,17 @@
             cleanCartItems += `1x [ΜΕΤΑΦΟΡΙΚΑ / ΕΞΟΔΑ ΑΠΟΣΤΟΛΗΣ] ---- ${shippingCost.toFixed(2)}€\n`;
         }
 
-        const paymentText = selectedPaymentMethod === "bank" ? "Κατάθεση σε Τράπεζα" : "Μετρητά";
+        // Διαμόρφωση του κειμένου πληρωμής για το email
+        let paymentText = "Μετρητά";
+        if (selectedPaymentMethod === "bank") {
+            paymentText = selectedBank === "nbg" ? "Κατάθεση σε Τράπεζα (ΕΘΝΙΚΗ)" : "Κατάθεση σε Τράπεζα (EUROBANK)";
+        }
+
         const shippingText = selectedShippingMethod === "free" ? "Χωρίς Έξοδα Αποστολής" : `Έξοδα Αποστολής: ${shippingCost.toFixed(2)}€`;
         const inputNotes = document.getElementById("order-notes").value.trim() || "Δεν υπάρχουν σημειώσεις.";
         const combinedNotes = `ΕΠΩΝΥΜΙΑ: ${company}\nΑΦΜ: ${afm}\nΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ: ${paymentText}\nΜΕΤΑΦΟΡΙΚΑ: ${shippingText}\n\nΠΑΡΑΤΗΡΗΣΕΙΣ:\n${inputNotes}`;
 
+        /* ΕΔΩ ΜΠΗΚΑΝ ΚΑΙ ΤΑ 3 EMAIL ΜΑΖΙ: ΤΟΥ ΠΕΛΑΤΗ, ΤΟΥ ΠΩΛΗΤΗ ΚΑΙ ΤΗΣ ΕΤΑΙΡΕΙΑΣ */
         const multipleRecipients = `${email}, cosmeticskaterina@gmail.com, info@jofourgreece.gr`;
 
         const templateParams = {
@@ -420,6 +490,7 @@
                 cart = [];
                 selectedPaymentMethod = "";
                 selectedShippingMethod = ""; 
+                resetBankSelection();
                 document.getElementById("customer-company").value = "";
                 document.getElementById("customer-afm").value = "";
                 document.getElementById("customer-email").value = "";
@@ -431,6 +502,7 @@
                 document.getElementById("ship-free").classList.remove("active");
                 document.getElementById("ship-custom").classList.remove("active");
                 document.getElementById("shipping-input-container").style.display = "none";
+                document.getElementById("bank-selection-box").style.display = "none";
 
                 updateCart();
                 orderBtn.disabled = false;
