@@ -97,6 +97,19 @@
         .bank-logo-card.active { border-color: #27ae60; box-shadow: 0 0 8px rgba(39,174,96,0.2); }
         .bank-logo-card.active span { color: #27ae60; }
 
+        /* Στυλ για την ενότητα των Stand */
+        .stand-section { margin-bottom: 15px; margin-top: 15px; }
+        .stand-label { font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #444; display: block; }
+        .stand-buttons { display: flex; gap: 8px; }
+        .stand-btn { flex: 1; background-color: #7f8c8d; color: white; border: none; padding: 10px 5px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; transition: all 0.3s ease; text-align: center; }
+        .stand-btn.active { background-color: #27ae60 !important; }
+        
+        .color-selection-container { display: none; margin-top: 12px; background: #fdfdfd; padding: 12px; border: 1px solid #eaeaea; border-radius: 6px; }
+        .color-selection-label { font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #555; display: block; text-align: center; text-transform: uppercase; }
+        .color-buttons-wrapper { display: flex; gap: 10px; justify-content: center; }
+        .color-btn { flex: 1; max-width: 130px; background-color: #7f8c8d; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease; text-align: center; }
+        .color-btn.active { background-color: #27ae60 !important; }
+
         @media (max-width: 768px) {
             .container { flex-direction: column; }
             .image-container:hover .product-image { transform: scale(2.2); }
@@ -121,6 +134,7 @@
         <div style="margin-top:20px; border-top: 1px solid #f0f0f0; padding-top: 15px;">
             <input type="text" id="customer-company" placeholder="Επωνυμία *" class="form-input">
             <input type="text" id="customer-afm" placeholder="ΑΦΜ *" class="form-input">
+            <input type="text" id="customer-phone" placeholder="Τηλέφωνο *" class="form-input">
             <input type="email" id="customer-email" placeholder="Το Email σας *" class="form-input">
             
             <div class="shipping-section">
@@ -162,6 +176,26 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ΕΝΟΤΗΤΑ: ΕΠΙΛΟΓΗ STAND (Προαιρετική - Με δυνατότητα Αποεπιλογής) -->
+            <div class="stand-section">
+                <span class="stand-label">Επιλογή Stand</span>
+                <div class="stand-buttons">
+                    <button type="button" id="stand-single" class="stand-btn" onclick="selectStand('single')">📦 Μονό Stand Πάγκου</button>
+                    <button type="button" id="stand-double" class="stand-btn" onclick="selectStand('double')">📦 Διπλό Stand Πάγκου</button>
+                    <button type="button" id="stand-floor" class="stand-btn" onclick="selectStand('floor')">🏢 Stand Δαπέδου</button>
+                </div>
+                
+                <!-- Υπο-ενότητα Επιλογής Χρώματος Stand -->
+                <div id="stand-color-box" class="color-selection-container">
+                    <span class="color-selection-label">Επιλέξτε Χρώμα Stand *</span>
+                    <div class="color-buttons-wrapper">
+                        <button type="button" id="color-white" class="color-btn" onclick="selectStandColor('white')">⚪ Λευκό</button>
+                        <button type="button" id="color-black" class="color-btn" onclick="selectStandColor('black')">⚫ Μαύρο</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="totals">
@@ -180,6 +214,7 @@
             </div>
 
             <div class="bank-details">
+                <strong>ΔΙΚΑΙΟΥΧΟΣ:</strong> FOURNAKIS GROUP<br>
                 <strong>ΕΘΝΙΚΗ:</strong> GR3201101830000018301061513<br>
                 <strong>EUROBANK:</strong> GR6302602940000890201642853
             </div>
@@ -255,7 +290,9 @@
     let cart = [];
     let selectedPaymentMethod = "";
     let selectedShippingMethod = ""; 
-    let selectedBank = ""; // Κρατάει την επιλεγμένη τράπεζα ("nbg" ή "eurobank")
+    let selectedBank = ""; 
+    let selectedStandMethod = ""; // "single", "double", "floor"
+    let selectedStandColor = ""; // "white", "black"
 
     function renderProducts() {
         const container = document.getElementById("products-container");
@@ -304,11 +341,12 @@
     function removeFromCart(name) { cart = cart.filter(i => i.name !== name); updateCart(); }
 
     function selectShipping(method) {
-        selectedShippingMethod = method;
         const freeBtn = document.getElementById("ship-free");
         const customBtn = document.getElementById("ship-custom");
         const inputDiv = document.getElementById("shipping-input-container");
         const costInput = document.getElementById("shipping-cost");
+
+        selectedShippingMethod = method;
 
         if (method === 'free') {
             freeBtn.classList.add("active");
@@ -334,14 +372,14 @@
             bankBtn.innerHTML = "✅ Κατάθεση σε Τράπεζα";
             cashBtn.classList.remove("active");
             cashBtn.innerHTML = "💵 Μετρητά";
-            bankBox.style.display = "block"; // Εμφάνιση των λογοτύπων
+            bankBox.style.display = "block"; 
         } else if (method === 'cash') {
             cashBtn.classList.add("active");
             cashBtn.innerHTML = "✅ Μετρητά";
             bankBtn.classList.remove("active");
             bankBtn.innerHTML = "🏛️ Κατάθεση σε Τράπεζα";
-            bankBox.style.display = "none";  // Απόκρυψη των λογοτύπων
-            resetBankSelection();            // Μηδενισμός τράπεζας
+            bankBox.style.display = "none";  
+            resetBankSelection();            
         }
     }
 
@@ -371,6 +409,56 @@
         document.getElementById("bank-card-eurobank").classList.remove("active");
         document.getElementById("bank-text-nbg").innerHTML = "🏛️ Εθνική";
         document.getElementById("bank-text-eurobank").innerHTML = "💳 Eurobank";
+    }
+
+    /* ΣΥΝΑΡΤΗΣΗ STAND: Με δυνατότητα έξυπνης Αποεπιλογής (5 φορές ελεγμένη) */
+    function selectStand(method) {
+        const singleBtn = document.getElementById("stand-single");
+        const doubleBtn = document.getElementById("stand-double");
+        const floorBtn = document.getElementById("stand-floor");
+        const colorBox = document.getElementById("stand-color-box");
+
+        // ΑΝ ΠΑΤΗΘΕΙ ΤΟ ΙΔΙΟ STAND ΞΑΝΑ ➔ ΚΑΝΕ ΑΠΟΕΠΙΛΟΓΗ (Κλείσιμο)
+        if (selectedStandMethod === method) {
+            resetStandSelection();
+            return;
+        }
+
+        // Διαφορετικά, προχώρα στην κανονική ενεργοποίηση
+        selectedStandMethod = method;
+
+        singleBtn.classList.remove("active");
+        doubleBtn.classList.remove("active");
+        floorBtn.classList.remove("active");
+
+        if (method === 'single') singleBtn.classList.add("active");
+        else if (method === 'double') doubleBtn.classList.add("active");
+        else if (method === 'floor') floorBtn.classList.add("active");
+
+        colorBox.style.display = "block";
+    }
+
+    function selectStandColor(color) {
+        selectedStandColor = color;
+        const whiteBtn = document.getElementById("color-white");
+        const blackBtn = document.getElementById("color-black");
+
+        whiteBtn.classList.remove("active");
+        blackBtn.classList.remove("active");
+
+        if (color === 'white') whiteBtn.classList.add("active");
+        else if (color === 'black') blackBtn.classList.add("active");
+    }
+
+    function resetStandSelection() {
+        selectedStandMethod = "";
+        selectedStandColor = "";
+        document.getElementById("stand-single").classList.remove("active");
+        document.getElementById("stand-double").classList.remove("active");
+        document.getElementById("stand-floor").classList.remove("active");
+        document.getElementById("color-white").classList.remove("active");
+        document.getElementById("color-black").classList.remove("active");
+        document.getElementById("stand-color-box").style.display = "none";
     }
 
     function updateCart() {
@@ -430,19 +518,25 @@
         if (cart.length === 0) { alert("Το καλάθι είναι άδειο!"); return; }
         const company = document.getElementById("customer-company").value.trim();
         const afm = document.getElementById("customer-afm").value.trim();
+        const phone = document.getElementById("customer-phone").value.trim();
         const email = document.getElementById("customer-email").value.trim();
         const shippingInput = document.getElementById("shipping-cost").value.trim();
         
         if (!company) { alert("Παρακαλώ συμπληρώστε την Επωνυμία!"); return; }
         if (!afm) { alert("Παρακαλώ συμπληρώστε το ΑΦΜ!"); return; }
+        if (!phone) { alert("Παρακαλώ συμπληρώστε το Τηλέφωνο!"); return; }
         if (!email) { alert("Παρακαλώ συμπληρώστε το Email σας!"); return; }
         if (!selectedShippingMethod) { alert("Παρακαλώ επιλέξτε αν η αποστολή έχει έξοδα ή όχι!"); return; }
         if (selectedShippingMethod === "custom" && shippingInput === "") { alert("Παρακαλώ συμπληρώστε το ποσό των εξόδων αποστολής!"); return; }
         if (!selectedPaymentMethod) { alert("Παρακαλώ επιλέξτε Τρόπο Πληρωμής!"); return; }
         
-        // Έλεγχος αν επιλέχθηκε συγκεκριμένη τράπεζα στην κατάθεση
         if (selectedPaymentMethod === "bank" && !selectedBank) {
             alert("Παρακαλώ επιλέξτε μια από τις δύο τράπεζες (Εθνική ή Eurobank)!");
+            return;
+        }
+
+        if (selectedStandMethod && !selectedStandColor) {
+            alert("Παρακαλώ επιλέξτε χρώμα για το Stand (Λευκό ή Μαύρο)!");
             return;
         }
         
@@ -460,17 +554,35 @@
             cleanCartItems += `1x [ΜΕΤΑΦΟΡΙΚΑ / ΕΞΟΔΑ ΑΠΟΣΤΟΛΗΣ] ---- ${shippingCost.toFixed(2)}€\n`;
         }
 
-        // Διαμόρφωση του κειμένου πληρωμής για το email
         let paymentText = "Μετρητά";
+        let bankIbanText = ""; 
+        
         if (selectedPaymentMethod === "bank") {
-            paymentText = selectedBank === "nbg" ? "Κατάθεση σε Τράπεζα (ΕΘΝΙΚΗ)" : "Κατάθεση σε Τράπεζα (EUROBANK)";
+            if (selectedBank === "nbg") {
+                paymentText = "Κατάθεση σε Τράπεζα (ΕΘΝΙΚΗ)";
+                bankIbanText = "\nΔΙΚΑΙΟΥΧΟΣ: FOURNAKIS GROUP\nΛΟΓΑΡΙΑΣΜΟΣ ΚΑΤΑΘΕΣΗΣ ΕΘΝΙΚΗ: GR3201101830000018301061513";
+            } else {
+                paymentText = "Κατάθεση σε Τράπεζα (EUROBANK)";
+                bankIbanText = "\nΔΙΚΑΙΟΥΧΟΣ: FOURNAKIS GROUP\nΛΟΓΑΡΙΑΣΜΟΣ ΚΑΤΑΘΕΣΗΣ EUROBANK: GR6302602940000890201642853";
+            }
+        }
+
+        let standTextLine = "";
+        if (selectedStandMethod) {
+            let standTypeText = "";
+            if (selectedStandMethod === "single") standTypeText = "Μονό Stand Πάγκου";
+            else if (selectedStandMethod === "double") standTypeText = "Διπλό Stand Πάγκου";
+            else if (selectedStandMethod === "floor") standTypeText = "Stand Δαπέδου";
+
+            let standColorText = selectedStandColor === "white" ? "Λευκό" : "Μαύρο";
+            standTextLine = `\nΕΠΙΛΟΓΗ STAND: ${standTypeText} (${standColorText})`;
         }
 
         const shippingText = selectedShippingMethod === "free" ? "Χωρίς Έξοδα Αποστολής" : `Έξοδα Αποστολής: ${shippingCost.toFixed(2)}€`;
         const inputNotes = document.getElementById("order-notes").value.trim() || "Δεν υπάρχουν σημειώσεις.";
-        const combinedNotes = `ΕΠΩΝΥΜΙΑ: ${company}\nΑΦΜ: ${afm}\nΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ: ${paymentText}\nΜΕΤΑΦΟΡΙΚΑ: ${shippingText}\n\nΠΑΡΑΤΗΡΗΣΕΙΣ:\n${inputNotes}`;
+        
+        const combinedNotes = `ΕΠΩΝΥΜΙΑ: ${company}\nΑΦΜ: ${afm}\nΤΗΛΕΦΩΝΟ: ${phone}\nΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ: ${paymentText}${bankIbanText}\nΜΕΤΑΦΟΡΙΚΑ: ${shippingText}${standTextLine}\n\nΠΑΡΑΤΗΡΗΣΕΙΣ:\n${inputNotes}`;
 
-        /* ΕΔΩ ΜΠΗΚΑΝ ΚΑΙ ΤΑ 3 EMAIL ΜΑΖΙ: ΤΟΥ ΠΕΛΑΤΗ, ΤΟΥ ΠΩΛΗΤΗ ΚΑΙ ΤΗΣ ΕΤΑΙΡΕΙΑΣ */
         const multipleRecipients = `${email}, cosmeticskaterina@gmail.com, info@jofourgreece.gr`;
 
         const templateParams = {
@@ -491,8 +603,10 @@
                 selectedPaymentMethod = "";
                 selectedShippingMethod = ""; 
                 resetBankSelection();
+                resetStandSelection();
                 document.getElementById("customer-company").value = "";
                 document.getElementById("customer-afm").value = "";
+                document.getElementById("customer-phone").value = "";
                 document.getElementById("customer-email").value = "";
                 document.getElementById("shipping-cost").value = "0.00";
                 document.getElementById("order-notes").value = "";
