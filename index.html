@@ -214,7 +214,7 @@
             </div>
 
             <div class="bank-details">
-                <strong>ΔΙΚΑΙΟΥΧΟΣ:</strong> FOURNAKIS GROUP<br>
+                <strong>ΔΙΚΑΙΟΥΧΟΣ:</strong> ΦΟΥΡΝΑΚΗΣ ΙΩΑΝΝΗΣ<br>
                 <strong>ΕΘΝΙΚΗ:</strong> GR3201101830000018301061513<br>
                 <strong>EUROBANK:</strong> GR6302602940000890201642853
             </div>
@@ -246,7 +246,7 @@
         { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e1", name: "Sweet Diva Perfume", price: 4.95, img: "images/diva.jpg" },
         { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e2", name: "White Luxe Perfume", price: 4.95, img: "images/white_luxe.jpg" },
         { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e3", name: "Golden Aura Perfume", price: 4.95, img: "images/golden_aura.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e4", name: "Gelato Dream Perfume", price: 4.95, img: "images/gelato.jpg" },
+        { cat: "ΑΡΩRAPA (50ml) - ESSENTIAL", id: "e4", name: "Gelato Dream Perfume", price: 4.95, img: "images/gelato.jpg" },
         { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e5", name: "Crystal Breeze Perfume", price: 4.95, img: "images/crystal.jpg" },
         { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e6", name: "Brazilian Sol Perfume", price: 4.95, img: "images/brazilian.jpg" },
         { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e7", name: "Velvet Cream Perfume", price: 4.95, img: "images/velvet.jpg" },
@@ -411,20 +411,17 @@
         document.getElementById("bank-text-eurobank").innerHTML = "💳 Eurobank";
     }
 
-    /* ΣΥΝΑΡΤΗΣΗ STAND: Με δυνατότητα έξυπνης Αποεπιλογής (5 φορές ελεγμένη) */
     function selectStand(method) {
         const singleBtn = document.getElementById("stand-single");
         const doubleBtn = document.getElementById("stand-double");
         const floorBtn = document.getElementById("stand-floor");
         const colorBox = document.getElementById("stand-color-box");
 
-        // ΑΝ ΠΑΤΗΘΕΙ ΤΟ ΙΔΙΟ STAND ΞΑΝΑ ➔ ΚΑΝΕ ΑΠΟΕΠΙΛΟΓΗ (Κλείσιμο)
         if (selectedStandMethod === method) {
             resetStandSelection();
             return;
         }
 
-        // Διαφορετικά, προχώρα στην κανονική ενεργοποίηση
         selectedStandMethod = method;
 
         singleBtn.classList.remove("active");
@@ -560,10 +557,10 @@
         if (selectedPaymentMethod === "bank") {
             if (selectedBank === "nbg") {
                 paymentText = "Κατάθεση σε Τράπεζα (ΕΘΝΙΚΗ)";
-                bankIbanText = "\nΔΙΚΑΙΟΥΧΟΣ: FOURNAKIS GROUP\nΛΟΓΑΡΙΑΣΜΟΣ ΚΑΤΑΘΕΣΗΣ ΕΘΝΙΚΗ: GR3201101830000018301061513";
+                bankIbanText = "\nΔΙΚΑΙΟΥΧΟΣ: ΦΟΥΡΝΑΚΗΣ ΙΩΑΝΝΗΣ\nΛΟΓΑΡΙΑΣΜΟΣ ΚΑΤΑΘΕΣΗΣ ΕΘΝΙΚΗ: GR3201101830000018301061513";
             } else {
                 paymentText = "Κατάθεση σε Τράπεζα (EUROBANK)";
-                bankIbanText = "\nΔΙΚΑΙΟΥΧΟΣ: FOURNAKIS GROUP\nΛΟΓΑΡΙΑΣΜΟΣ ΚΑΤΑΘΕΣΗΣ EUROBANK: GR6302602940000890201642853";
+                bankIbanText = "\nΔΙΚΑΙΟΥΧΟΣ: ΦΟΥΡΝΑΚΗΣ ΙΩΑΝΝΗΣ\nΛΟΓΑΡΙΑΣΜΟΣ ΚΑΤΑΘΕΣΗΣ EUROBANK: GR6302602940000890201642853";
             }
         }
 
