@@ -152,7 +152,7 @@
                 </div>
             </div>
             
-            <textarea id="order-notes" rows="3" placeholder="Παρατηρήσεις..." class="form-input" style="font-family: sans-serif; resize: none; margin-bottom:12px;"></textarea>
+            <textarea id="order-notes" rows="3" placeholder="Παρατηρήσεις..." class="form-input" style="font-family: sans-serif; resize: none; margin-bottom:12px; color: #d32f2f; font-weight: bold; font-size: 14px;"></textarea>
             
             <div class="payment-section">
                 <span class="payment-label">Τρόπος Πληρωμής *</span>
@@ -234,57 +234,61 @@
     };
 
     const inventory = [
-        /* ΑΡΩΜΑΤΑ 50ml (ANGEL) - 6.88€ */
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a1", name: "Angel No 000 Perfume", price: 6.88, img: "images/angel000.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a2", name: "Angel No 222 Perfume", price: 6.88, img: "images/angel222.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a3", name: "Angel No 333 Perfume", price: 6.88, img: "images/angel333.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a4", name: "Angel No 555 Perfume", price: 6.88, img: "images/angel555.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a5", name: "Angel No 777 Perfume", price: 6.88, img: "images/angel777.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ANGEL", id: "a6", name: "Angel No 888 Perfume", price: 6.88, img: "images/angel888.jpg" },
+        /* ANGEL ΑΡΩΜΑΤΑ (50ml) - 6.88€ */
+        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a1", name: "Angel No 000", price: 6.88, img: "images/angel000.jpg" },
+        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a2", name: "Angel No 222", price: 6.88, img: "images/angel222.jpg" },
+        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a3", name: "Angel No 333", price: 6.88, img: "images/angel333.jpg" },
+        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a4", name: "Angel No 555", price: 6.88, img: "images/angel555.jpg" },
+        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a5", name: "Angel No 777", price: 6.88, img: "images/angel777.jpg" },
+        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a6", name: "Angel No 888", price: 6.88, img: "images/angel888.jpg" },
 
-        /* ΑΡΩΜΑΤΑ 50ml (ESSENTIAL) - 4.95€ */
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e1", name: "Sweet Diva Perfume", price: 4.95, img: "images/diva.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e2", name: "White Luxe Perfume", price: 4.95, img: "images/white_luxe.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e3", name: "Golden Aura Perfume", price: 4.95, img: "images/golden_aura.jpg" },
-        { cat: "ΑΡΩRAPA (50ml) - ESSENTIAL", id: "e4", name: "Gelato Dream Perfume", price: 4.95, img: "images/gelato.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e5", name: "Crystal Breeze Perfume", price: 4.95, img: "images/crystal.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e6", name: "Brazilian Sol Perfume", price: 4.95, img: "images/brazilian.jpg" },
-        { cat: "ΑΡΩΜΑΤΑ (50ml) - ESSENTIAL", id: "e7", name: "Velvet Cream Perfume", price: 4.95, img: "images/velvet.jpg" },
+        /* ESSENTIAL ΑΡΩΜΑΤΑ (50ml) - 4.95€ */
+        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e1", name: "Sweet Diva", price: 4.95, img: "images/diva.jpg" },
+        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e2", name: "White Luxe", price: 4.95, img: "images/white_luxe.jpg" },
+        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e3", name: "Golden Aura", price: 4.95, img: "images/golden_aura.jpg" },
+        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e4", name: "Gelato Dream", price: 4.95, img: "images/gelato.jpg" },
+        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e5", name: "Crystal Breeze", price: 4.95, img: "images/crystal.jpg" },
+        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e6", name: "Brazilian Sol", price: 4.95, img: "images/brazilian.jpg" },
+        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e7", name: "Velvet Cream", price: 4.95, img: "images/velvet.jpg" },
 
         /* ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ - 4.95€ */
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m1", name: "Ocean Force Perfume", price: 4.95, img: "images/ocean_force.jpg" },
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m2", name: "Dark Horizon Perfume", price: 4.95, img: "images/dark_horizon.jpg" },
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m3", name: "Amber Royal Perfume", price: 4.95, img: "images/amber_royal.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m1", name: "Ocean Force", price: 4.95, img: "images/ocean_force.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m2", name: "Dark Horizon", price: 4.95, img: "images/dark_horizon.jpg" },
+        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m3", name: "Amber Royal", price: 4.95, img: "images/amber_royal.jpg" },
 
-        /* BODY LOTIONS (250ml) */
-        { cat: "BODY LOTIONS (250ml)", id: "l1", name: "Caramel Pop Lotion", price: 4.50, img: "images/CARAMEL_POP.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l2", name: "Juicy Nectar Lotion", price: 4.50, img: "images/JUICY_NECTAR.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l3", name: "Rose Delight Lotion", price: 4.50, img: "images/ROSE_DELIGHT.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l4", name: "Sweet Jasmine Lotion", price: 4.50, img: "images/SWEET_JASMINE.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l5", name: "Velvet Cream Lotion", price: 4.50, img: "images/VELVET_CREAM.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l6", name: "White Cashmere Lotion", price: 4.50, img: "images/WHITE_CASHMERE.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l7", name: "Angel No 000 Lotion", price: 4.84, img: "images/lotion000.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l8", name: "Angel No 333 Lotion", price: 4.84, img: "images/lotion333.jpg" },
-        { cat: "BODY LOTIONS (250ml)", id: "l9", name: "Angel No 777 Lotion", price: 4.84, img: "images/lotion777.jpg" },
+        /* ANGEL BODY LOTIONS - 4.84€ */
+        { cat: "ANGEL BODY LOTIONS", id: "l7", name: "Angel No 000 Lotion", price: 4.84, img: "images/lotion000.jpg" },
+        { cat: "ANGEL BODY LOTIONS", id: "l8", name: "Angel No 333 Lotion", price: 4.84, img: "images/lotion333.jpg" },
+        { cat: "ANGEL BODY LOTIONS", id: "l9", name: "Angel No 777 Lotion", price: 4.84, img: "images/lotion777.jpg" },
+        { cat: "ANGEL BODY LOTIONS", id: "l10", name: "Angel No 888 Lotion", price: 4.84, img: "images/lotion888.jpg" },
 
-        /* HAIR & BODY MISTS (200ml) */
-        { cat: "HAIR & BODY MISTS", id: "mist1", name: "Brazilian Sol Mist", price: 5.40, img: "images/mist_brazilian.png" },
-        { cat: "HAIR & BODY MISTS", id: "mist2", name: "Crystal Breeze Mist", price: 5.90, img: "images/mist_crystal.jpg" },
-        { cat: "HAIR & BODY MISTS", id: "mist3", name: "Gelato Dream Mist", price: 5.40, img: "images/mist_gelato.jpg" },
-        { cat: "HAIR & BODY MISTS", id: "mist4", name: "Golden Aura Mist", price: 5.90, img: "images/mist_golden.jpg" },
-        { cat: "HAIR & BODY MISTS", id: "mist5", name: "Ocean Force Mist", price: 5.90, img: "images/mist_ocean.jpg" },
-        { cat: "HAIR & BODY MISTS", id: "mist6", name: "Sweet Diva Mist", price: 5.90, img: "images/mist_diva.jpg" },
-        { cat: "HAIR & BODY MISTS", id: "mist7", name: "Vanilla 222 Mist", price: 5.40, img: "images/mist_vanilla.jpg" },
-        { cat: "HAIR & BODY MISTS", id: "mist8", name: "Velvet Cream Mist", price: 5.40, img: "images/mist_velvet.jpg" },
-        { cat: "HAIR & BODY MISTS", id: "mist9", name: "White Luxe Mist", price: 5.40, img: "images/mist_white.jpg" },
+        /* NEA BODY LOTIONS - 4.95€ */
+        { cat: "BODY LOTIONS", id: "l1", name: "Caramel Pop Lotion", price: 4.95, img: "images/CARAMEL_POP.jpg" },
+        { cat: "BODY LOTIONS", id: "l2", name: "Juicy Nectar Lotion", price: 4.95, img: "images/JUICY_NECTAR.jpg" },
+        { cat: "BODY LOTIONS", id: "l3", name: "Rose Delight Lotion", price: 4.95, img: "images/ROSE_DELIGHT.jpg" },
+        { cat: "BODY LOTIONS", id: "l4", name: "Sweet Jasmine Lotion", price: 4.95, img: "images/SWEET_JASMINE.jpg" },
+        { cat: "BODY LOTIONS", id: "l5", name: "Velvet Cream Lotion", price: 4.95, img: "images/VELVET_CREAM.jpg" },
+        { cat: "BODY LOTIONS", id: "l6", name: "White Cashmere Lotion", price: 4.95, img: "images/WHITE_CASHMERE.jpg" },
 
-        /* GIFT SETS - 9.00€ & 9.90€ */
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs1", name: "Set - Ocean Force", price: 9.00, img: "images/set_ocean.jpg" },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs2", name: "Set - Sweet Diva", price: 9.90, img: "images/set_diva.jpg" },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs3", name: "Set - Crystal Breeze", price: 9.90, img: "images/set_crystal.jpg" },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs4", name: "Set - Gelato Dream", price: 9.00, img: "images/set_gelato.jpg" },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs5", name: "Set - Golden Aura", price: 9.90, img: "images/set_golden.jpg" },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs6", name: "Set - Vanilla 222", price: 9.90, img: "images/set_vanilla.jpg" }
+        /* HAIR & BODY MISTS - 5.94€ & 6.49€ */
+        { cat: "HAIR & BODY MISTS", id: "mist3", name: "Gelato Dream Mist", price: 5.94, img: "images/mist_gelato.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist7", name: "Vanilla 222 Mist", price: 5.94, img: "images/mist_vanilla.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist1", name: "Brazilian Sol Mist", price: 5.94, img: "images/mist_brazilian.png" },
+        { cat: "HAIR & BODY MISTS", id: "mist8", name: "Velvet Cream Mist", price: 5.94, img: "images/mist_velvet.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist9", name: "White Luxe Mist", price: 5.94, img: "images/mist_white.jpg" },
+        
+        { cat: "HAIR & BODY MISTS", id: "mist5", name: "Ocean Force Mist", price: 6.49, img: "images/mist_ocean.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist6", name: "Sweet Diva Glitter Mist", price: 6.49, img: "images/mist_diva.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist4", name: "Golden Aura Glitter Mist", price: 6.49, img: "images/mist_golden.jpg" },
+        { cat: "HAIR & BODY MISTS", id: "mist2", name: "Crystal Breeze Glitter Mist", price: 6.49, img: "images/mist_crystal.jpg" },
+
+        /* GIFT SETS */
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs1", name: "Set - Ocean Force", price: 9.90, img: "images/set_ocean.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs4", name: "Set - Gelato Dream", price: 9.90, img: "images/set_gelato.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs2", name: "Set - Sweet Diva", price: 10.89, img: "images/set_diva.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs6", name: "Set - Vanilla 222", price: 10.89, img: "images/set_vanilla.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs3", name: "Set - Crystal Breeze", price: 10.89, img: "images/set_crystal.jpg" },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs5", name: "Set - Golden Aura", price: 10.89, img: "images/set_golden.jpg" }
     ];
 
     let cart = [];
