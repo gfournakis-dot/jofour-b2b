@@ -290,13 +290,14 @@
         { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs3", name: "Set - Crystal Breeze", price: 10.89, img: "images/set_crystal.jpg", allowTester: false },
         { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs5", name: "Set - Golden Aura", price: 10.89, img: "images/set_golden.jpg", allowTester: false },
 
-        /* XMAS GIFT SETS (Νέα Χριστουγεννιάτικα Σετ με XMAS SET μπροστά) - Χωρίς Tester */
+        /* XMAS GIFT SETS (Νέα Χριστουγεννιάτικα Σετ με XMAS SET μπροστά) */
         { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas1", name: "XMAS SET Gelato Dream & Sweet Jasmine", price: 12.50, img: "images/SET1 (1).png", allowTester: false },
         { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas2", name: "XMAS SET White Luxe & White Cashmere", price: 12.50, img: "images/SET2.png", allowTester: false },
         { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas3", name: "XMAS SET Sweet Diva & Juicy Nectar", price: 14.50, img: "images/SET3.png", allowTester: false },
         { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas4", name: "XMAS SET Brazilian Sol & Caramel Pop", price: 18.70, img: "images/SET4.png", allowTester: false },
         { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas5", name: "XMAS SET Golden Aura & Rose Delight", price: 18.70, img: "images/SET5.png", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas6", name: "XMAS SET Velvet Cream", price: 18.70, img: "images/SET6.png", allowTester: false }
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas6", name: "XMAS SET Velvet Cream", price: 18.70, img: "images/SET6.png", allowTester: false },
+        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas7", name: "XMAS SET 777", price: 10.90, img: "images/XMAS SET 777 .png", allowTester: true }
     ];
 
     let cart = [];
@@ -543,7 +544,7 @@
         if (!email) { alert("Παρακαλώ συμπληρώστε το Email σας!"); return; }
         if (!selectedShippingMethod) { alert("Παρακαλώ επιλέξτε αν η αποστολή έχει έξοδα ή όχι!"); return; }
         if (selectedShippingMethod === "custom" && shippingInput === "") { alert("Παρακαλώ συμπληρώστε το ποσό των εξόδων αποστολής!"); return; }
-        if (!selectedPaymentMethod) { alert("Παρακαλώ επιλέξτε Τρόπο Πληρωμής!"); return; }
+        if (!selectedPaymentMethod) { alert("Παρακαλώ επιλέξτε Τρόπος Πληρωμής!"); return; }
         
         if (selectedPaymentMethod === "bank" && !selectedBank) {
             alert("Παρακαλώ επιλέξτε μια από τις δύο τράπεζες (Εθνική ή Eurobank)!");
