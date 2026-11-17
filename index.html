@@ -27,13 +27,32 @@
         .products-section { flex: 2; min-width: 300px; }
         .cart-section { flex: 1; min-width: 320px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.08); align-self: flex-start; position: sticky; top: 10px; border: 1px solid #eaeaea; }
         
+        .category-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; margin: 10px 0 0 0; padding: 16px 18px; background: var(--accent); color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; text-align: left; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+        .category-toggle .cat-count { font-size: 12px; font-weight: normal; opacity: 0.85; margin-left: 8px; letter-spacing: 0; text-transform: none; }
+        .category-toggle .cat-arrow { font-size: 18px; margin-left: 10px; }
+        .category-toggle.open { background: #7d1323; border-radius: 8px 8px 0 0; }
+        .category-body { display: none; padding-top: 8px; border-left: 3px solid var(--gold); padding-left: 10px; margin-bottom: 10px; }
+        .category-body.open { display: block; }
+        .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0 14px 0; }
+        .cat-card { display: flex; flex-direction: column; padding: 0; border: 2px solid #ececec; border-radius: 12px; background: #ffffff; cursor: pointer; overflow: hidden; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.08); transition: all 0.25s ease; font-family: inherit; }
+        .cat-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+        .cat-card.open { border-color: var(--accent); box-shadow: 0 4px 14px rgba(166,25,46,0.25); }
+        .cat-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; aspect-ratio: 1 / 1; background: #ffffff; }
+        .cat-mosaic img { width: 100%; height: 100%; object-fit: cover; display: block; background: #f4f4f4; filter: brightness(1.07) contrast(1.05) saturate(1.04); }
+        .cat-info { background: var(--accent); color: #ffffff; padding: 10px 8px; display: flex; flex-direction: column; gap: 3px; flex: 1; justify-content: center; }
+        .cat-card.open .cat-info { background: #7d1323; }
+        .cat-name { font-size: 15px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        .cat-count { font-size: 12px; opacity: 0.9; }
+        .cat-arrow { font-size: 16px; }
+        .cat-back { width: 100%; margin: 6px 0 14px 0; padding: 12px; background: #7f8c8d; color: #fff; border: none; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; }
+        .subcategory-title { margin: 18px 0 10px 0; padding: 4px 10px; font-size: 13px; font-weight: bold; letter-spacing: 0.8px; color: #ffffff; background: var(--gold); border-radius: 4px; text-transform: uppercase; }
         .category-title { border-bottom: 3px solid var(--gold); padding-bottom: 5px; margin-top: 25px; font-weight: bold; text-transform: uppercase; font-size: 15px; letter-spacing: 1px; color: var(--accent); }
         
         .product-card { background: white; padding: 12px; margin-bottom: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border: 1px solid #f0f0f0; position: relative; transition: all 0.3s ease; }
         .product-card:hover { border-color: var(--accent); }
 
         .product-card.sold-out { background-color: #fcfcfc; border-color: #e0e0e0; opacity: 0.75; }
-        .product-card.sold-out .product-image { filter: grayscale(100%); }
+        .product-card.sold-out .product-image { filter: grayscale(100%) brightness(1.06); }
 
         /* Μοντέρνο, λοξό κοκκινοκαφέ σήμα sold out με άσπρα γράμματα */
         .sold-out-ribbon {
@@ -57,6 +76,7 @@
         .product-image { 
             width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 1px solid #eaeaea; 
             background-color: #ffffff; transition: transform 0.3s ease; cursor: zoom-in; display: block;
+            filter: brightness(1.07) contrast(1.05) saturate(1.04); /* φωτεινές, ομοιόμορφες φωτογραφίες */
         }
         .image-container:hover .product-image { 
             transform: scale(3.5); 
@@ -73,6 +93,7 @@
         .qty-input { width: 45px; padding: 6px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-weight: bold; font-size: 14px;}
         
         .tester-btn { background-color: var(--btn-tester); color: white; border: none; padding: 8px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease; }
+        .gift-btn { background-color: #8e5a9b; color: white; border: none; padding: 8px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease; }
         .add-btn { background-color: var(--btn-main); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
         
         .admin-toggle-soldout { 
@@ -152,6 +173,16 @@
             .container { flex-direction: column; }
             .image-container:hover .product-image { transform: scale(2.2); }
         }
+    
+        @media print {
+            header, .products-section, .checkout-btn, .admin-footer-btn, .cart-line button { display: none !important; }
+            .container { display: block !important; padding: 0 !important; }
+            .cart-section { position: static !important; box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; }
+            .cart-line { font-size: 12pt !important; line-height: 1.5 !important; }
+            .cart-line b { font-size: 12pt !important; }
+            .totals { font-size: 12pt !important; }
+            .grand-total { font-size: 14pt !important; }
+        }
     </style>
 </head>
 <body>
@@ -190,7 +221,7 @@
                 </div>
             </div>
             
-            <textarea id="order-notes" rows="3" placeholder="Παρατηρήσεις..." class="form-input" style="font-family: sans-serif; resize: none; margin-bottom:12px; color: #d32f2f; font-weight: bold; font-size: 14px;"></textarea>
+            <textarea id="order-notes" rows="3" placeholder="Παρατηρήσεις..." class="form-input" style="font-family: sans-serif; resize: none; margin-bottom:12px; color: var(--accent); font-weight: bold; font-size: 14px;"></textarea>
             
             <div class="payment-section">
                 <span class="payment-label">Τρόπος Πληρωμής *</span>
@@ -284,70 +315,66 @@
     };
 
     const inventory = [
-        /* ANGEL ΑΡΩΜΑΤΑ (50ml) */
-        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a1", name: "Angel No 000", price: 6.88, img: "images/angel000.jpg", allowTester: true },
-        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a2", name: "Angel No 222", price: 6.88, img: "images/angel222.jpg", allowTester: true },
-        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a3", name: "Angel No 333", price: 6.88, img: "images/angel333.jpg", allowTester: true },
-        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a4", name: "Angel No 555", price: 6.88, img: "images/angel555.jpg", allowTester: true },
-        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a5", name: "Angel No 777", price: 6.88, img: "images/angel777.jpg", allowTester: true },
-        { cat: "ANGEL ΑΡΩΜΑΤΑ (50ml)", id: "a6", name: "Angel No 888", price: 6.88, img: "images/angel888.jpg", allowTester: true },
-
-        /* ESSENTIAL ΑΡΩΜΑΤΑ (50ml) */
-        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e1", name: "Sweet Diva", price: 4.95, img: "images/diva.jpg", allowTester: true },
-        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e2", name: "White Luxe", price: 4.95, img: "images/white_luxe.jpg", allowTester: true },
-        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e3", name: "Golden Aura", price: 4.95, img: "images/golden_aura.jpg", allowTester: true },
-        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e4", name: "Gelato Dream", price: 4.95, img: "images/gelato.jpg", allowTester: true },
-        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e5", name: "Crystal Breeze", price: 4.95, img: "images/crystal.jpg", allowTester: true },
-        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e6", name: "Brazilian Sol", price: 4.95, img: "images/brazilian.jpg", allowTester: true },
-        { cat: "ESSENTIAL ΑΡΩΜΑΤΑ (50ml)", id: "e7", name: "Velvet Cream", price: 4.95, img: "images/velvet.jpg", allowTester: true },
-
-        /* ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ */
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m1", name: "Ocean Force", price: 4.95, img: "images/ocean_force.jpg", allowTester: true },
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m2", name: "Dark Horizon", price: 4.95, img: "images/dark_horizon.jpg", allowTester: true },
-        { cat: "ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ", id: "m3", name: "Amber Royal", price: 4.95, img: "images/amber_royal.jpg", allowTester: true },
-
-        /* ANGEL BODY LOTIONS */
-        { cat: "ANGEL BODY LOTIONS", id: "l7", name: "Angel No 000 Lotion", price: 4.84, img: "images/lotion000.jpg", allowTester: true },
-        { cat: "ANGEL BODY LOTIONS", id: "l8", name: "Angel No 333 Lotion", price: 4.84, img: "images/lotion333.jpg", allowTester: true },
-        { cat: "ANGEL BODY LOTIONS", id: "l9", name: "Angel No 777 Lotion", price: 4.84, img: "images/lotion777.jpg", allowTester: true },
-        { cat: "ANGEL BODY LOTIONS", id: "l10", name: "Angel No 888 Lotion", price: 4.84, img: "images/lotion888.jpg", allowTester: true },
-
-        /* NEA BODY LOTIONS */
-        { cat: "BODY LOTIONS", id: "l1", name: "Caramel Pop Lotion", price: 4.95, img: "images/CARAMEL_POP.jpg", allowTester: true },
-        { cat: "BODY LOTIONS", id: "l2", name: "Juicy Nectar Lotion", price: 4.95, img: "images/JUICY_NECTAR.jpg", allowTester: true },
-        { cat: "BODY LOTIONS", id: "l3", name: "Rose Delight Lotion", price: 4.95, img: "images/ROSE_DELIGHT.jpg", allowTester: true },
-        { cat: "BODY LOTIONS", id: "l4", name: "Sweet Jasmine Lotion", price: 4.95, img: "images/SWEET_JASMINE.jpg", allowTester: true },
-        { cat: "BODY LOTIONS", id: "l5", name: "Velvet Cream Lotion", price: 4.95, img: "images/VELVET_CREAM.jpg", allowTester: true },
-        { cat: "BODY LOTIONS", id: "l6", name: "White Cashmere Lotion", price: 4.95, img: "images/WHITE_CASHMERE.jpg", allowTester: true },
-
-        /* HAIR & BODY MISTS */
-        { cat: "HAIR & BODY MISTS", id: "mist3", name: "Gelato Dream Mist", price: 5.94, img: "images/mist_gelato.jpg", allowTester: true },
-        { cat: "HAIR & BODY MISTS", id: "mist7", name: "Vanilla 222 Mist", price: 5.94, img: "images/mist_vanilla.jpg", allowTester: true },
-        { cat: "HAIR & BODY MISTS", id: "mist1", name: "Brazilian Sol Mist", price: 5.94, img: "images/mist_brazilian.png", allowTester: true },
-        { cat: "HAIR & BODY MISTS", id: "mist8", name: "Velvet Cream Mist", price: 5.94, img: "images/mist_velvet.jpg", allowTester: true },
-        { cat: "HAIR & BODY MISTS", id: "mist9", name: "White Luxe Mist", price: 5.94, img: "images/mist_white.jpg", allowTester: true },
-        
-        { cat: "HAIR & BODY MISTS", id: "mist5", name: "Ocean Force Mist", price: 6.49, img: "images/mist_ocean.jpg", allowTester: true },
-        { cat: "HAIR & BODY MISTS", id: "mist6", name: "Sweet Diva Glitter Mist", price: 6.49, img: "images/mist_diva.jpg", allowTester: true },
-        { cat: "HAIR & BODY MISTS", id: "mist4", name: "Golden Aura Glitter Mist", price: 6.49, img: "images/mist_golden.jpg", allowTester: true },
-        { cat: "HAIR & BODY MISTS", id: "mist2", name: "Crystal Breeze Glitter Mist", price: 6.49, img: "images/mist_crystal.jpg", allowTester: true },
-
-        /* GIFT SETΣ (Παλιά) */
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs1", name: "Set - Ocean Force", price: 9.90, img: "images/set_ocean.jpg", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs4", name: "Set - Gelato Dream", price: 9.90, img: "images/set_gelato.jpg", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs2", name: "Set - Sweet Diva", price: 10.89, img: "images/set_diva.jpg", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs6", name: "Set - Vanilla 222", price: 10.89, img: "images/set_vanilla.jpg", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs3", name: "Set - Crystal Breeze", price: 10.89, img: "images/set_crystal.jpg", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "gs5", name: "Set - Golden Aura", price: 10.89, img: "images/set_golden.jpg", allowTester: false },
-
-        /* XMAS GIFT SETS */
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas1", name: "XMAS SET Gelato Dream & Sweet Jasmine", price: 12.50, img: "images/SET1 (1).png", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas2", name: "XMAS SET White Luxe & White Cashmere", price: 12.50, img: "images/SET2.png", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas3", name: "XMAS SET Sweet Diva & Juicy Nectar", price: 14.50, img: "images/SET3.png", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas4", name: "XMAS SET Brazilian Sol & Caramel Pop", price: 18.70, img: "images/SET4.png", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas5", name: "XMAS SET Golden Aura & Rose Delight", price: 18.70, img: "images/SET5.png", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas6", name: "XMAS SET Velvet Cream", price: 18.70, img: "images/SET6.png", allowTester: false },
-        { cat: "GIFT SETS (ΣΕΤ ΔΩΡΩΝ)", id: "xmas7", name: "XMAS SET 777", price: 10.90, img: "images/XMAS SET 777 .png", allowTester: true }
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "p1", name: "NEW White Luxe", price: 9.55, img: "images/PERFUME WHITE LUXE 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "p2", name: "NEW Brazilian Sol", price: 9.55, img: "images/PERFUME BRAZILIAN SOL 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "p3", name: "NEW Sweet Diva", price: 9.90, img: "images/PERFUME SWEET DIVA 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "p4", name: "NEW Velvet Cream", price: 9.90, img: "images/PERFUME VELVET CREAM 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "p5", name: "Midnight Jasmine", price: 10.90, img: "images/PERFUME MINDNIGHT JASMINE 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "p6", name: "Sunset Blossom", price: 11.25, img: "images/PERFUME SUNSSET BLOSSOM 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "p7", name: "Red Passion", price: 11.25, img: "images/PERFUME RED PASSION 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "e1", name: "Sweet Diva", price: 4.95, img: "images/diva.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "e2", name: "White Luxe", price: 4.95, img: "images/white_luxe.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "e3", name: "Golden Aura", price: 4.95, img: "images/golden_aura.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "e4", name: "Gelato Dream", price: 4.95, img: "images/gelato.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "e5", name: "Crystal Breeze", price: 4.95, img: "images/crystal.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "e6", name: "Brazilian Sol", price: 4.95, img: "images/brazilian.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "e7", name: "Velvet Cream", price: 4.95, img: "images/velvet.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ANGEL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "a1", name: "Angel No 000", price: 6.88, img: "images/angel000.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ANGEL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "a2", name: "Angel No 222", price: 6.88, img: "images/angel222.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ANGEL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "a3", name: "Angel No 333", price: 6.88, img: "images/angel333.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ANGEL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "a4", name: "Angel No 555", price: 6.88, img: "images/angel555.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ANGEL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "a5", name: "Angel No 777", price: 6.88, img: "images/angel777.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ANGEL ΓΥΝΑΙΚΕΙΑ ΑΡΩΜΑΤΑ (50ml)", id: "a6", name: "Angel No 888", price: 6.88, img: "images/angel888.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "p8", name: "Absolut You", price: 9.90, img: "images/PERFUME ABSOLUT YOU 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "p9", name: "My Essence", price: 10.90, img: "images/PERFUME MY ESSENCE 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "p10", name: "Magnetic Storm", price: 10.90, img: "images/PERFUME MAGNETIC STORM 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "p11", name: "Deep Wood", price: 11.25, img: "images/PERFUME DEEP WOOD 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "PRIME ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "p12", name: "Botanic Green", price: 11.25, img: "images/PERFUME BOTANIC GREEN 50ML.png", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "m1", name: "Ocean Force", price: 4.95, img: "images/ocean_force.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "m2", name: "Dark Horizon", price: 4.95, img: "images/dark_horizon.jpg", allowTester: true },
+        { main: "ΑΡΩΜΑΤΑ JO. FOUR", cat: "ESSENTIAL ΑΝΔΡΙΚΑ ΑΡΩΜΑΤΑ (50ml)", id: "m3", name: "Amber Royal", price: 4.95, img: "images/amber_royal.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ESSENTIAL BODY LOTIONS", id: "l1", name: "Caramel Pop Lotion", price: 4.95, img: "images/CARAMEL_POP.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ESSENTIAL BODY LOTIONS", id: "l2", name: "Juicy Nectar Lotion", price: 4.95, img: "images/JUICY_NECTAR.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ESSENTIAL BODY LOTIONS", id: "l3", name: "Rose Delight Lotion", price: 4.95, img: "images/ROSE_DELIGHT.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ESSENTIAL BODY LOTIONS", id: "l4", name: "Sweet Jasmine Lotion", price: 4.95, img: "images/SWEET_JASMINE.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ESSENTIAL BODY LOTIONS", id: "l5", name: "Velvet Cream Lotion", price: 4.95, img: "images/VELVET_CREAM.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ESSENTIAL BODY LOTIONS", id: "l6", name: "White Cashmere Lotion", price: 4.95, img: "images/WHITE_CASHMERE.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ANGEL BODY LOTIONS", id: "l7", name: "Angel No 000 Lotion", price: 4.84, img: "images/lotion000.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ANGEL BODY LOTIONS", id: "l8", name: "Angel No 333 Lotion", price: 4.84, img: "images/lotion333.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ANGEL BODY LOTIONS", id: "l9", name: "Angel No 777 Lotion", price: 4.84, img: "images/lotion777.jpg", allowTester: true },
+        { main: "BODY LOTIONS", cat: "ANGEL BODY LOTIONS", id: "l10", name: "Angel No 888 Lotion", price: 4.84, img: "images/lotion888.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist3", name: "Gelato Dream Mist", price: 5.94, img: "images/mist_gelato.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist7", name: "Vanilla 222 Mist", price: 5.94, img: "images/mist_vanilla.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist1", name: "Brazilian Sol Mist", price: 5.94, img: "images/mist_brazilian.png", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist8", name: "Velvet Cream Mist", price: 5.94, img: "images/mist_velvet.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist9", name: "White Luxe Mist", price: 5.94, img: "images/mist_white.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist5", name: "Ocean Force Mist", price: 6.49, img: "images/mist_ocean.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist6", name: "Sweet Diva Glitter Mist", price: 6.49, img: "images/mist_diva.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist4", name: "Golden Aura Glitter Mist", price: 6.49, img: "images/mist_golden.jpg", allowTester: true },
+        { main: "HAIR & BODY MISTS", cat: "", id: "mist2", name: "Crystal Breeze Glitter Mist", price: 6.49, img: "images/mist_crystal.jpg", allowTester: true },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "gs1", name: "Set - Ocean Force", price: 9.90, img: "images/set_ocean.jpg", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "gs4", name: "Set - Gelato Dream", price: 9.90, img: "images/set_gelato.jpg", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "gs2", name: "Set - Sweet Diva", price: 10.89, img: "images/set_diva.jpg", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "gs6", name: "Set - Vanilla 222", price: 10.89, img: "images/set_vanilla.jpg", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "gs3", name: "Set - Crystal Breeze", price: 10.89, img: "images/set_crystal.jpg", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "gs5", name: "Set - Golden Aura", price: 10.89, img: "images/set_golden.jpg", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "xmas1", name: "XMAS SET Gelato Dream & Sweet Jasmine", price: 12.50, img: "images/SET1 (1).png", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "xmas2", name: "XMAS SET White Luxe & White Cashmere", price: 12.50, img: "images/SET2.png", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "xmas3", name: "XMAS SET Sweet Diva & Juicy Nectar", price: 14.50, img: "images/SET3.png", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "xmas4", name: "XMAS SET Brazilian Sol & Caramel Pop", price: 18.70, img: "images/SET4.png", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "xmas5", name: "XMAS SET Golden Aura & Rose Delight", price: 18.70, img: "images/SET5.png", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "xmas6", name: "XMAS SET Velvet Cream", price: 18.70, img: "images/SET6.png", allowTester: false },
+        { main: "ΣΕΤ ΔΩΡΩΝ", cat: "", id: "xmas7", name: "XMAS SET 777", price: 10.90, img: "images/XMAS SET 777 .png", allowTester: true }
     ];
 
     let cart = [];
@@ -380,6 +407,7 @@
                 alert("Η λειτουργία διαχειριστή απενεργοποιήθηκε.");
             }
             renderProducts();
+            updateCart();
         } else {
             alert("Λάθος κωδικός!");
             document.getElementById("admin-pass-input").value = "";
@@ -392,7 +420,7 @@
         
         const itemToRemove = inventory.find(i => i.id === id);
         if (itemToRemove && soldOutProducts[id]) {
-            cart = cart.filter(c => c.name !== itemToRemove.name && c.name !== `[TESTER] ${itemToRemove.name}`);
+            cart = cart.filter(c => c.name !== cartLabel(itemToRemove) && c.name !== `[TESTER] ${cartLabel(itemToRemove)}` && c.name !== `[ΔΩΡΟ] ${cartLabel(itemToRemove)}`);
         }
         
         renderProducts();
@@ -401,21 +429,38 @@
 
     function renderProducts() {
         const container = document.getElementById("products-container");
-        container.innerHTML = "";
-        const grouped = inventory.reduce((acc, curr) => {
-            if (!acc[curr.cat]) acc[curr.cat] = [];
-            acc[curr.cat].push(curr);
-            return acc;
-        }, {});
+        let out = "";
+        let cards = "";
+        const mains = [...new Set(inventory.map(i => i.main))];
+        let lastMain = null;
+        let lastSub = null;
 
-        for (const [category, items] of Object.entries(grouped)) {
-            container.innerHTML += `<h2 class="category-title">${category}</h2>`;
-            items.forEach((item) => {
+        {
+            inventory.forEach((item) => {
+                if (item.main !== lastMain) {
+                    if (lastMain !== null) out += `<button type="button" class="cat-back" onclick="closeCategories()">⬆ Πίσω στις κατηγορίες</button></div>`;
+                    const mi = mains.indexOf(item.main);
+                    const isOpen = openMain === item.main;
+                    const cnt = inventory.filter(x => x.main === item.main).length;
+                    const mosaic = (CAT_MOSAIC[item.main] || []).map(f => `<img src="images/${f}" alt="" onerror="this.style.visibility='hidden'">`).join('');
+                    cards += `<button type="button" id="cat-btn-${mi}" class="cat-card ${isOpen ? 'open' : ''}" onclick="toggleCategory(${mi})"><div class="cat-mosaic">${mosaic}</div><div class="cat-info"><span class="cat-name">${item.main}</span><span class="cat-count">${cnt} προϊόντα</span><span class="cat-arrow">${isOpen ? '▾' : '▸'}</span></div></button>`;
+                    out += `<div id="cat-body-${mi}" class="category-body ${isOpen ? 'open' : ''}">`;
+                    lastMain = item.main;
+                    lastSub = null;
+                }
+                if (item.cat && item.cat !== lastSub) {
+                    out += `<h3 class="subcategory-title">${item.cat}</h3>`;
+                    lastSub = item.cat;
+                }
                 const isSoldOut = soldOutProducts[item.id] === true;
                 const testerButtonHtml = (item.allowTester !== false && !isSoldOut)
                     ? `<button id="btn-tester-${item.id}" class="tester-btn" onclick="addTester('${item.name}', '${item.id}')">🎁 Tester</button>` 
                     : '';
                 
+                const giftButtonHtml = !isSoldOut
+                    ? `<button id="btn-gift-${item.id}" class="gift-btn" onclick="addGift('${item.name}', '${item.id}')">🎀 Δώρο</button>`
+                    : '';
+
                 const qtyInputHtml = !isSoldOut 
                     ? `<input type="number" id="qty-${item.id}" class="qty-input" value="0" min="0">` 
                     : `<span style="font-size: 11px; color: #7b3f00; font-weight: bold;">ΕΞΑΝΤΛΗΘΗΚΕ</span>`;
@@ -427,7 +472,7 @@
                 const adminBtnText = isSoldOut ? "✅ Επαναφορά σε Απόθεμα" : "🚫 Θέση σε Sold Out";
                 const adminBtnClass = isSoldOut ? "admin-toggle-soldout is-out" : "admin-toggle-soldout";
 
-                container.innerHTML += `
+                out += `
                     <div class="product-card ${isSoldOut ? 'sold-out' : ''}">
                         <div class="image-container">
                             <img src="${item.img}" alt="${item.name}" class="product-image" onerror="this.src='https://placehold.co/75?text=Jo.Four'">
@@ -442,31 +487,80 @@
                         </div>
                         <div class="actions">
                             ${testerButtonHtml}
+                            ${giftButtonHtml}
                             ${qtyInputHtml}
                             ${addBtnHtml}
                         </div>
                     </div>`;
             });
         }
+        if (lastMain !== null) out += `<button type="button" class="cat-back" onclick="closeCategories()">⬆ Πίσω στις κατηγορίες</button></div>`;
+        container.innerHTML = `<div class="cat-grid" id="cat-grid">${cards}</div>` + out;
     }
 
-    function addToCart(name, price, id, isTester = false) {
+    const CAT_MOSAIC = {
+        "ΑΡΩΜΑΤΑ JO. FOUR": ["PERFUME RED PASSION 50ML.png", "PERFUME SWEET DIVA 50ML.png", "PERFUME DEEP WOOD 50ML.png", "PERFUME MAGNETIC STORM 50ML.png"],
+        "BODY LOTIONS": ["CARAMEL_POP.jpg", "JUICY_NECTAR.jpg", "lotion777.jpg", "ROSE_DELIGHT.jpg"],
+        "HAIR & BODY MISTS": ["mist_golden.jpg", "mist_ocean.jpg", "mist_crystal.jpg", "mist_velvet.jpg"],
+        "ΣΕΤ ΔΩΡΩΝ": ["SET3.png", "SET1 (1).png", "SET4.png", "SET6.png"]
+    };
+
+    let openMain = null; /* στην αρχή όλες οι κατηγορίες είναι κλειστές */
+
+    function toggleCategory(mi) {
+        const mains = [...new Set(inventory.map(i => i.main))];
+        const name = mains[mi];
+        openMain = (openMain === name) ? null : name;
+        mains.forEach((m, i) => {
+            const isOpen = openMain === m;
+            const btn = document.getElementById(`cat-btn-${i}`);
+            const body = document.getElementById(`cat-body-${i}`);
+            if (btn) {
+                btn.classList.toggle("open", isOpen);
+                btn.querySelector(".cat-arrow").innerText = isOpen ? "▾" : "▸";
+            }
+            if (body) body.classList.toggle("open", isOpen);
+        });
+        if (openMain) {
+            const body = document.getElementById(`cat-body-${mi}`);
+            if (body) body.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }
+
+    function closeCategories() {
+        if (openMain) {
+            const mains = [...new Set(inventory.map(i => i.main))];
+            toggleCategory(mains.indexOf(openMain));
+        }
+        const grid = document.getElementById("cat-grid");
+        if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* Στο καλάθι/email τα αρώματα γράφουν και τη λέξη Perfume */
+    function cartLabel(item) {
+        return item.main === "ΑΡΩΜΑΤΑ JO. FOUR" ? `${item.name} Perfume` : item.name;
+    }
+
+    function addToCart(name, price, id, isTester = false, isGift = false) {
+        const invItem = inventory.find(i => i.id === id);
+        if (invItem) name = cartLabel(invItem);
         if (soldOutProducts[id]) {
             alert("Το προϊόν αυτό έχει εξαντληθεί!");
             return;
         }
         let qtyToAdd = 1;
-        if (!isTester && id) {
+        if (!isTester && !isGift && id) {
             qtyToAdd = parseInt(document.getElementById(`qty-${id}`).value) || 0;
             if (qtyToAdd <= 0) { alert("Επιλέξτε ποσότητα!"); return; }
         }
-        const itemName = isTester ? `[TESTER] ${name}` : name;
+        const itemName = isTester ? `[TESTER] ${name}` : (isGift ? `[ΔΩΡΟ] ${name}` : name);
         const existing = cart.find(item => item.name === itemName);
-        if (existing) { existing.qty += qtyToAdd; } else { cart.push({ name: itemName, price, qty: qtyToAdd, isTester }); }
+        if (existing) { existing.qty += qtyToAdd; } else { cart.push({ name: itemName, price, qty: qtyToAdd, isTester, isGift }); }
         updateCart();
     }
 
     function addTester(name, id) { addToCart(name, 0, id, true); }
+    function addGift(name, id) { addToCart(name, 0, id, false, true); }
     function removeFromCart(name) { cart = cart.filter(i => i.name !== name); updateCart(); }
 
     function selectShipping(method) {
@@ -599,12 +693,13 @@
             document.getElementById("net-total").innerText = "0.00 €";
             document.getElementById("vat-total").innerText = "0.00 €";
             document.getElementById("grand-total").innerText = "0.00 €";
+            syncProductButtons();
             return;
         } else {
             cart.forEach(item => {
                 productsSubtotal += item.price * item.qty;
                 cartContainer.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-bottom:8px; border-bottom:1px solid #f0f0f0; padding-bottom:5px;">
+                    <div class="cart-line" style="display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-bottom:8px; border-bottom:1px solid #f0f0f0; padding-bottom:5px;">
                         <div style="flex:2;"><b>${item.qty}x</b> ${item.name}</div>
                         <div style="flex:1; text-align:right;">${(item.price * item.qty).toFixed(2)}€</div>
                         <button onclick="removeFromCart('${item.name}')" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold; margin-left:10px;">✕</button>
@@ -630,14 +725,25 @@
         document.getElementById("vat-total").innerText = vat.toFixed(2) + " €";
         document.getElementById("grand-total").innerText = grandTotal.toFixed(2) + " €";
 
+        syncProductButtons();
+    }
+
+    function syncProductButtons() {
         inventory.forEach(item => {
-            if (item.allowTester !== false && !soldOutProducts[item.id]) {
+            if (soldOutProducts[item.id]) return;
+            if (item.allowTester !== false) {
                 const btn = document.getElementById(`btn-tester-${item.id}`);
                 if (btn) {
-                    const hasT = cart.some(c => c.name === `[TESTER] ${item.name}`);
+                    const hasT = cart.some(c => c.name === `[TESTER] ${cartLabel(item)}`);
                     btn.innerHTML = hasT ? "✅ Tester" : "🎁 Tester";
                     btn.style.backgroundColor = hasT ? "#27ae60" : "var(--btn-tester)";
                 }
+            }
+            const gbtn = document.getElementById(`btn-gift-${item.id}`);
+            if (gbtn) {
+                const g = cart.find(c => c.name === `[ΔΩΡΟ] ${cartLabel(item)}`);
+                gbtn.innerHTML = g ? `✅ Δώρο (${g.qty})` : "🎀 Δώρο";
+                gbtn.style.backgroundColor = g ? "#27ae60" : "#8e5a9b";
             }
         });
     }
